@@ -27,17 +27,21 @@ builder.Services.AddScoped<IRepository<Account>, AccountRepository>();
 builder.Services.AddScoped<IRepository<Information>, InformationRepository>();
 builder.Services.AddScoped<IService, UserService>();
 
-
-
+;
 
 var app = builder.Build();
 
+app.UseHttpsRedirection();
+
+
 app.MapControllers();
 
+app.UseAuthentication();
 
 app.MapGet("/", () => "Hello World!");
 
 app.UseStaticFiles();
+
 
 
 app.Run();
