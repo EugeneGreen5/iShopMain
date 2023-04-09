@@ -9,7 +9,6 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["iShopMain/iShopMain.csproj", "iShopMain/"]
 RUN dotnet restore "iShopMain/iShopMain.csproj"
-RUN dotnet dev-certs https
 COPY . .
 WORKDIR "/src/iShopMain"
 RUN dotnet build "iShopMain.csproj" -c Release -o /app/build
@@ -20,5 +19,4 @@ RUN dotnet publish "iShopMain.csproj" -c Release -o /app/publish /p:UseAppHost=f
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-COPY --from=build /root/.dotnet/corefx/cryptography/x509stores/my/* /root/.dotnet/corefx/cryptography/x509stores/my/
 ENTRYPOINT ["dotnet", "iShopMain.dll"]
