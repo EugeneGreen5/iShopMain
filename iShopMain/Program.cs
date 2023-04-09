@@ -34,6 +34,7 @@ var app = builder.Build();
 
 app.MapControllers();
 
+app.UseAuthentication();
 
 app.MapGet("/", () => "Hello World!");
 
