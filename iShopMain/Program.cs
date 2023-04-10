@@ -1,12 +1,10 @@
-using Duende.IdentityServer.Models;
 using iShopMain.Data;
 using iShopMain.Models.Entity.UserInfo;
 using iShopMain.Repositories;
 using iShopMain.Repositories.User;
 using iShopMain.Services;
 using Microsoft.EntityFrameworkCore;
-using System.Net;
-
+ 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
@@ -27,21 +25,18 @@ builder.Services.AddScoped<IRepository<Account>, AccountRepository>();
 builder.Services.AddScoped<IRepository<Information>, InformationRepository>();
 builder.Services.AddScoped<IService, UserService>();
 
-;
+builder.Services.AddApplicationInsightsTelemetry();
 
 var app = builder.Build();
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 
 app.MapControllers();
-
-app.UseAuthentication();
 
 app.MapGet("/", () => "Hello World!");
 
 app.UseStaticFiles();
-
-
 
 app.Run();
