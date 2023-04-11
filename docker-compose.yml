@@ -22,10 +22,9 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ASPNETCORE_Kestrel__Certificates__Default__Password=passwordmaster
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/dev_cert.pfx
     volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ~/.aspnet/https:/https:ro
+      - ./iShopMain/conf.d/https/:/https/
 
   iShopDataBase:
     image: postgres:15.2
@@ -42,3 +41,4 @@ services:
 
 volumes:
   postgres-data: 
+
